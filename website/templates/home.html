@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block search %}
+<style>
+    .loca{
+        display: none;
+    }
+    .use{
+        background: rgba(0, 47, 255, 0.46);
+       
+    }
+    a{
+        text-decoration: none;
+        color: aliceblue;
+    }
+    h2{
+        color: black;
+    }
+    .login-signup{
+        position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 10px;
+    display: inline
+    }
+    
+</style>
+<div class="login-signup">
+    {% if user.id %}
+    <button class="btn btn-primary"><a href="/logout">Logout</a></button>
+    {% else %}
+    <button class="btn btn-primary"><a href="/login">Login</a></button>
+    <button class="btn btn-primary"><a href="/signup">Signup</a></button>
+    {% endif %}         
+</div>
+<header class="masthead">
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="text-center text-white">
+                    <!-- Page heading-->
+                    <h1 class="mb-5">Search for the universities you like</h1>
+                    <form method="Post">
+                        <div class="row">
+                            <div class="col">
+                                <label for="labs"> Required Lab </label>
+                                <select name="labs" id="labs" required>
+                                    {% for i in labnames  %}
+                                    <option value="{{i}}" class="labnames" >{{i}}</option>                    
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div id="loca">
+                            </div>
+                            <div class="col">
+                                <span>Required distance</span>&nbsp;<label for="distance" id="given_distance">0</label><span>km</span>
+                                <input type="range" id="distance" name="distance" value="0" min="1" max="100"  
+                                oninput="document.getElementById('given_distance').innerHTML=this.value"/>
+                            </div>
+                            <div class="col">
+                                <label for="city">City</label>
+                                <input type="text" name="city" placeholder="city">
+                            </div>
+                            <div class="col">
+                                <label for="date">Required Date</label>
+                                <input type="date" name="date" id="given_date" required>
+                            </div>
+                            <div class="col"><button class="btn btn-primary" type="submit">Search</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+{% block container%}
+{% for i in labs %}
+<section class="showcase">
+    <div class="container-fluid p-0">
+        {% if loop.index%2==0 %}
+        <div class="row g-0">
+            <div class="col-lg-6 order-lg-2 right text-white showcase-img right" style="background-image:  url({{i.image}})"></div>
+            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                <a href="/{{i.instituteref.name}}/profile" style="text-decoration: none;">
+                    <h2>{{i.instituteref.name}}</h2>
+                </a>
+                <div>
+                    <spam class="lab">Name of lab {{i.lab_name}}</spam>
+                </div>
+                <div>
+                    <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
+                </div>
+                    
+                <details><summary>Discription</summary>
+                    <p>{{i.discription}}</p>
+                </details>
+                    <div class="price">{{i.charge_per_slot}}</div>
+                    <div class="sharewithothers">Share</div>        
+                    <div class="book-lab-region-book"><button class="btn btn-primary "><a href="{{i.id}}/request" style="color: white; text-decoration: none;">Book</a></div>
+            </div>
+        </div>
+            
+        {% else %}
+        <div class="row g-0">
+            <div class="col-lg-6 text-white showcase-img" style="background-image:  url({{i.image}})"></div>
+            <div class="col-lg-6 my-auto showcase-text">
+                <a href="/{{i.instituteref.name}}/profile" style="text-decoration: none;">
+                    <h2>{{i.instituteref.name}}</h2>
+                </a>
+                <div>
+                    <spam class="lab">Name of lab {{i.lab_name}}</spam>
+                </div>
+                <div>
+                    <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
+                </div>
+                <details><summary>Discription</summary>
+                <p>{{i.discription}}</p></details>
+                <div class="price">{{i.charge_per_slot}}</dav>
+                    <div class="sharewithothers">Share</div>
+                    <div class="book-lab-region-book"><button class="btn btn-primary "><a href="{{i.id}}/request" style="color: white; text-decoration: none;">Book</a></div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+    
+{% endfor %}
+{% endblock %}
+<script>  
+</script>

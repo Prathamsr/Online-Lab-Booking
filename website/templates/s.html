@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <!-- ===== ===== Custom Css ===== ===== -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/responsive.css')}}">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    
+    <style>
+        .profile-image-background{
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 400px;
+            width: 400px;
+            background-position: center;
+        }
+        .profile-text-background{
+            height: auto;
+            padding: 65px 43px;
+            text-size-adjust: 20px;
+            background: #ffffff57;
+    border: 0px solid;
+    border-radius: 20px;
+    height: auto;
+    padding: 65px 43px;
+        }
+        h2{
+            font-size: large;
+        }
+        .lab{
+            font-weight: 600;
+        }
+       
+      .navbar {
+        display: flex;
+    justify-content: space-between;
+      }
+      .btn-primary {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    width: 82px;
+    height: 38px;
+    border: 0px solide black;
+    border-radius: 8px;
+}
+    </style>
+
+    <!-- ===== ===== Remix Font Icons Cdn ===== ===== -->
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/" class="fa fa-home"></a>
+        <a href="/search" class="fa fa-search"></a>
+        <a href="/upload" class="fa fa-upload"></a>
+        <a href="/requests" class="fa fa-inbox"></a>
+        <a href="/profile" class="fa fa-user"></a>
+      </div>
+    <!-- ===== ===== Body Main-Background ===== ===== -->
+    <span class="main_bg"></span>
+
+
+    <!-- ===== ===== Main-Container ===== ===== -->
+    <div class="container">
+
+        <!-- ===== ===== Header/Navbar ===== ===== -->
+        <header>
+            <div class="brandLogo">
+                <figure><img src="{{insti.profile_pic}}" alt="logo" width="40px" height="40px"></figure>
+                <span>{{insti.name}}</span>
+            </div>
+        </header>
+
+
+        <!-- ===== ===== User Main-Profile ===== ===== -->
+        <section class="userProfile card">
+            <div class="profile">
+                <figure><img src="{{insti.profile_pic}}" alt="profile" width="250px" height="250px"></figure>
+            </div>
+        </section>
+
+
+        <!-- ===== ===== Work & Skills Section ===== ===== -->
+        <section class="work_skills card">
+
+            <!-- ===== ===== Work Contaienr ===== ===== -->
+            <div class="work">
+                <h1 class="heading">Offices</h1>
+            
+                <div class="primary">
+                    <h1>{{ data.primary_office}}</h1>
+                    <span>Primary</span>
+                    <p>{{ data.primary_office_city }} <br>{{ data.primary_office_address}}</p>
+                </div>
+
+                <div class="secondary">
+                    <h1>{{data.secondary_office}}</h1>
+                    <span>Secondary</span>
+                    <p>{{ data.secondary_office_city }}<br>{{ data.secondary_office_address}}</p>
+                </div>
+            </div>
+
+            <!-- ===== ===== Skills Contaienr ===== ===== -->
+            <div class="skills">
+                <h1 class="heading">Laboratories to offer</h1>
+                <ul>
+                    {% for i in labs %}
+                    <li style="--i:{{loop.index}}">{{i.name}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- ===== ===== User Details Sections ===== ===== -->
+        <section class="userDetails card">
+            <div class="userName">
+                <h1 class="name">{{insti.name}}</h1>
+                <div class="map">
+                    <i class="ri-map-pin-fill ri"></i>
+                </div>
+                <p>{{data.speciality}}</p>
+            </div>
+
+            <div class="btns">
+                <ul>
+                    <li class="sendMsg">
+                        <i class="ri-chat-4-fill ri"></i>
+                        <a href="#">Send Message</a>
+                    </li>
+
+                    <li class="sendMsg">
+                        <a href="#">Report User</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+        <!-- ===== ===== Timeline & About Sections ===== ===== -->
+        <section class="timeline_about card">
+            <div class="tabs">
+                <ul>
+                    <li class="timeline">
+                        <i class="ri-eye-fill ri"></i>
+                        <span>Timeline</span>
+                    </li>
+
+                    <li class="about active">
+                        <i class="ri-user-3-fill ri"></i>
+                        <span>About</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact_Info">
+                <h1 class="heading">Contact Information</h1>
+                <ul>
+                    <li class="phone">
+                        <h1 class="label">Phone:</h1>
+                        <span class="info">{{data.Contact_no}}</span>
+                    </li>
+
+                    <li class="address">
+                        <h1 class="label">Address:</h1>
+                        <span class="info">{{data.primary_address}} <br>{{insti.city}},{{insti.state }}</span>
+                    </li>
+
+                    <li class="email">
+                        <h1 class="label">E-mail:</h1>
+                        <span class="info">{{data.email}}</span>
+                    </li>
+
+                    <li class="site">
+                        <h1 class="label">Site:</h1>
+                        <span class="info">{{data.Website}}</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        {% for i in post %}
+        {% if loop.index%2!=0 %}
+        
+            
+                <div class="profile-image-background" style="background-image:  url({{i.image}});"></div>
+            
+            
+            
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text profile-text-background ">
+                    <div>
+                       <h2>
+                            <spam class="lab">{{i.lab_name}}</spam>
+                       </h2> 
+                    </div>
+                    <div>
+                        <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
+                    </div>
+                    
+                    <details><summary>Discription</summary>
+                        <p>{{i.discription}}</p></details>
+                        <div class="book-lab-region-book"><button class="btn btn-primary "><a href="/{{i.id}}/request" style="color: white; text-decoration: none;">Book</a></button></div>
+                        <div class="price">{{i.charge_per_slot}}</div>
+                        <div class="sharewithothers">Share</div>        
+                    
+                </div>
+            
+            
+        {% else %}
+                <div class="col-lg-6 my-auto showcase-text profile-text-background">
+                   
+                <div>
+                    <h2>
+                        <spam class="lab">{{i.lab_name}}</spam>
+                   </h2> 
+                </div>
+                <div>
+                    <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
+                </div>
+                <details><summary>Discription</summary>
+                    <p>{{i.discription}}</p></details>
+                    <div class="book-lab-region-book"><button class="btn btn-primary "><a href="/{{i.id}}/request" style="color: white; text-decoration: none;">Book</a></button></div>
+                    <div class="price">{{i.charge_per_slot}}</dav>
+                        <div class="sharewithothers">Share</div>
+                    </div>
+                </div>
+                <div class="profile-image-background" style="background-image:  url({{i.image}});"></div>
+            
+        {% endif %}
+    
+    
+{% endfor %}
+    </div>
+    </body>
+
+</html>

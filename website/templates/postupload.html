@@ -1,0 +1,123 @@
+{% extends "base2.html" %}
+{% block title %}Upload{% endblock %}
+
+{% block signupform%}
+<style>
+    .main-box{
+        width: 70%;
+    }
+    .disc{
+        height: 80px;
+    width: 300px;
+    background: #f8f9fa75;
+    border: 0px solid black;
+    border-radius: 20px;
+    }
+    .images-given-for-lab{
+        width: 80%;
+        min-height: 80px;
+        margin: auto;
+        background: #f8f9fa85;
+        border: 0px solid black;
+        border-radius: 20px;
+        
+    }
+    .images-given-for-lab img{
+        max-width: 188px;
+        align-self: center;
+    }
+  
+
+    
+    
+</style>
+
+<form method="POST" enctype="multipart/form-data">
+    <h3>Upload Details</h3>
+    <div class="upload-view"> 
+        <div class="lab-info">
+
+            <div class="form-group" >
+                <label for="discription-dis">Discription about lab (Mention if raw material for the lab is can be purchased befor either from the institution itself or if will be provided)</label>
+                
+                <textarea type="text" name="discription_about_lab" class="disc" placeholder="  Discription" cols="30" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="lab_name">Lab name</label>
+                <input type="text" name="lab_name" id="lab_name" class="form-control" placeholder="Lab Name" required>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-rows: 10% 90%;">
+
+            <div>
+                
+                <label for="" class="image-up">Uploaded Image</label>
+            </div>
+            <div class="images-given-for-lab">
+                <img src="" alt="" id="hello">
+            </div>
+        </div>
+    </div>
+    <div class="newdisplay" style="grid-template-columns: 40% 40% 40%;">
+
+        <div class="form-group">
+            <input type="file" name="profile_pic" id="profile_pic" style="display: none;">
+        <button onclick="document.getElementById('profile_pic').click()" type="button" class="btn btn-secondary">Add Picture</button>
+    </div>
+    
+    
+        <div class="form-group">
+            <label for="starting_date">Starting date</label>
+            <input type="date" name="starting_date" class="form-control" id="starting_date" placeholder="  " required>
+        </div>
+        <div class="form-group">
+            <label for="ending_date">Ending date</label>
+            <input type="date" name="ending_date" class="form-control" id="ending_date" placeholder="  " required>
+        </div>
+    
+    
+        <div class="form-group">
+            <label for="no_of_slots">Number of Slots in each Lab</label>
+            <input type="number" name="no_of_slots" class="form-control" id="no_of_slots" placeholder="  " required>
+        </div>
+        <div class="form-group" style="visibility: hidden;">
+            <label for="min_no_of_slots">Minimun number of slots to be filled per day</label>
+            <input type="number" name="min_no_of_slots" class="form-control" id="min_no_of_slots" placeholder="  ">
+        </div>
+    
+    
+        <div class="form-group">
+            <label for="duration_of_lab">Duration of lab( in hours)</label>
+            <input type="number" name="duration_of_lab" class="form-control" id="duration_of_lab" placeholder="  " required>
+        </div>
+        <div class="form-group">
+            <label for="no_of_lab_per_day">Number of labs per day</label>
+            <input type="number" name="no_of_lab_per_day" class="form-control" id="no_of_lab_per_day" placeholder="  " required>
+        </div>
+        <div class="form-group">
+            <label for="startinf_of_lab">Starting time of first lab</label>
+            <input type="time" name="starting_of_lab" class="form-control" id="startinf_of_lab" placeholder="  " required>
+        </div>
+    
+    <div class="form-group">
+        <label for="charge_per_slot">Charge per slot</label>
+        <input type="number" name="charge_per_slot" class="form-control" id="charge_per_slot" placeholder="  " required>
+    </div>
+</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+    const pre=document.querySelector(".images-given-for-lab");
+const given_img=document.querySelector("#profile_pic");
+const img =document.querySelector("#hello");
+given_img.addEventListener("change", function(){
+    const file=this.files[0];
+    const reader= new FileReader();
+    reader.onload=function(){
+        const result=reader.result;
+        img.src=result;
+    };
+    reader.readAsDataURL(file);
+});
+</script>
+    {% endblock %}

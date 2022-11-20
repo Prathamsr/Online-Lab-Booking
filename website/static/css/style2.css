@@ -1,0 +1,104 @@
+*{
+    margin: auto;
+}
+body{
+    background-image: url(https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.previewimage{
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 50px;
+    background-image: url(https://th.bing.com/th/id/OIP.LfUcKCHKBamgN20k7KQWeAHaHT?w=204&h=202&c=7&r=0&o=5&dpr=1.25&pid=1.7);
+    background-size: contain;
+    display: block;
+}
+.previewimage img{
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    border-radius: 50px;
+    background-image: url(https://th.bing.com/th/id/OIP.LfUcKCHKBamgN20k7KQWeAHaHT?w=204&h=202&c=7&r=0&o=5&dpr=1.25&pid=1.7);
+    background-size: contain;
+
+}
+.form-control{
+    width: 60%;
+    margin: auto;
+    background: #f8f9fa85;
+}
+.main-box{
+    position: inherit;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+    width: 30%;
+    margin: auto;
+
+}
+form{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    font-family: cursive;
+    margin: auto;
+    color: aliceblue;
+    margin: 30px auto;
+    border: 0px solid black;
+    border-radius: 40px;
+}
+form label{
+    font-size: smaller;
+    font-family: monospace;
+    
+}
+.sign-up{
+    background: #f8faf947;
+    flex-grow: 2;
+    border: 0px solid black;
+    border-radius: 40px;
+    
+
+}
+input{
+    background: #f8f9fa85;
+    height: 39px;
+    border: 0pc solid;
+    border-radius: 10px;
+}
+
+.hidden_stuff{
+    display: none;
+  }
+.information{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+.newdisplay{
+    display: grid;
+    grid-template-columns: 40% 40%;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.upload-view{
+    display: grid; 
+    grid-template-columns:50% 50%;
+    padding: 20px;
+}
+@media screen and (max-width: 768px) {
+    .newdisplay{
+        display: block;
+        
+    }
+    .upload-view{
+        display: block;
+    }
+
+}

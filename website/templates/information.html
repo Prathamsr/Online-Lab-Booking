@@ -1,0 +1,110 @@
+{% extends "base2.html" %}
+{% block title %}Information{% endblock %}
+{% block signupform %}
+
+<h3 style="color: white; size:8px; text-align: center; margin-top: 3%;">Details</h3>
+<style>
+    .main-box{
+        width: 80%;
+    }
+</style>
+<form method="POST" >
+    <div class="loca"></div>
+    <div class="information">
+
+        <div class="form-group">
+            <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="website">Website</label>
+            <input type="url" name="website" id="website" class="form-control" placeholder="Website">
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Number</label>
+            <input type="number" name="contact" id="contact" class="form-control" placeholder="Contact Number">
+        </div>
+        <div class="form-group">
+            <label for="Pri_address">Primary Address</label>
+            <input type="text" name="Pri_address" id="Pri_address" class="form-control" placeholder="Primary Address">
+        </div>
+        <div class="form-group">
+            <label for="speciality">Speciality</label>
+            <input type="text" name="speciality" id="speciality" class="form-control" placeholder="Speciality">
+        </div>
+        </div>
+        <div class="form-group">
+    <h4>Primary Office</h4>
+    <span>
+        <label for="pri_off_name">Name
+        </label>
+            <input type="text" class="form-control" name="pri_off_name" id="pri_off_name" placeholder='Name'>
+        </span>
+        <span>
+            <label for="pri_off_city">City
+            </label>
+            <input type="text" class="form-control" name="pri_off_city" id="pri_off_city" placeholder="City">
+        </span>  
+        <span>
+            <label for="pri_off_add">Address
+            </label>
+            <input type="text" class="form-control" name="pri_off_add" id="pri_off_add" placeholder="Address">
+        </span>  
+        </div>
+        <div class="form-group">
+        <h4>Secondary Office</h4>
+        <span>
+            <label for="sec_off_name">Name
+            </label>
+            <input type="text" class="form-control" name="sec_off_name" id="sec_off_name" placeholder='Name'>
+            
+        </span>
+        <span>
+            <label for="sec_off_city">City
+            </label>
+            <input type="text" class="form-control" name="sec_off_city" id="sec_off_city" placeholder="City">
+        </span>  
+        <span>
+            <label for="sec_off_add">Address
+            </label>
+            <input type="text" class="form-control" name="sec_off_add" id="sec_off_add" placeholder="Address">
+        </span>  
+        </div>
+        <div class="form-group">
+        <h3>Labs to Offer</h3>
+        <div class="form-group">
+            <label for="lab1">lab1</label>
+            <input type="text" name="lab1" id="lab1" placeholder="lab1">
+        </div>
+        <div class="form-group">
+            <label for="lab2">lab2</label>
+            <input type="text" name="lab2" id="lab2" placeholder="lab2">
+        </div>
+        <div class="form-group">
+            <label for="lab3">lab3</label>
+            <input type="text" name="lab3" id="lab3" placeholder="lab3">
+        </div>
+        <div class="form-group">
+            <label for="lab1">lab4</label>
+            <input type="text" name="lab4" id="lab4" placeholder="lab4">
+        </div>
+        <div class="form-group">
+            <label for="lab1">lab5</label>
+            <input type="text" name="lab5" id="lab5" placeholder="lab5">
+        </div>
+        <div class="form-group">
+            <label for="lab6">lab6</label>
+            <input type="text" name="lab6" id="lab6" placeholder="lab6">
+        </div>
+        <div class="form-group">
+            <label for="lab7">lab7</label>
+            <input type="text" name="lab7" id="lab7" placeholder="lab7">
+        </div>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

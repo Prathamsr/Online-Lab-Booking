@@ -1,0 +1,54 @@
+{% extends "base2.html" %}
+{% block title %}Sign up{% endblock %}
+
+{% block signupform%}
+<style>
+    .main-box{
+        width: 60%;
+    }
+</style>
+<form method="POST" enctype="multipart/form-data">
+    <div class="previewimage">
+        <img src="" alt=" " id="hello" >
+    </div>
+    <h3>login</h3>
+    <div class="newdisplay" >
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Enter email"  required/>
+    </div>
+    <div class="form-group">
+        <label for="firstname">First name</label>
+        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Firstname" required/>
+    </div>   
+    <div class="form-group"> 
+        <label for="degree_pursuing">Degree Pursuing</label>
+        <input type="text" name="degree_pursuing" id="degree_pursuing" class="form-control" placeholder="Degree Pursuing" required>
+    </div>
+    <div class="form-group">
+        <label for="parent_institute">Parent Institute</label>
+        <input type="text" name="parent_institute" id="parent_institute" class="form-control" placeholder="Parent Institute" required>
+    </div>
+    <div class="profile-pic">
+        <label for="profile_pic">Choose profile pic</label><br>
+        <input type="file" name="profile_pic" id="profile_pic" class="form-control" style="display: none;" required>
+        <button class="btn btn-secondary" type="button" onclick="document.getElementById('profile_pic').click()"> Choose</button>
+    </div>
+    <div class="form-group">
+        <label for="password1">Password</label>
+        <input type="password" name="password1" id="password1" class="form-control" placeholder="Enter password" required/>
+    </div>
+    <div class="formcontrlrl"></div>
+    <div class="form-group">
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm password" required/>
+    </div>
+    <br/>
+</div>
+    <button type="submit" class="btn btn-primary">Submit</button><br>
+    <div class="signuplink">
+        <a href="/signupasins">Signup as an institute</a>
+    </div>
+</form>
+{% endblock %}

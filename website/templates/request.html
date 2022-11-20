@@ -1,0 +1,133 @@
+{% extends "base2.html" %}
+{% block title %}Requesting{% endblock %}
+
+{% block signupform%}
+<style>
+    .main-box{
+        width: 80%;
+    }
+    .req-img-pic{
+        max-height: 279px;
+    max-width: 600px;
+    margin: auto;
+    display: block;
+    }
+    .post-information{
+        height: auto;
+        padding: 20px 100px;
+    }
+    .image-slider {
+        height: 150%;
+    }
+    @media screen {
+        
+    }
+    .images-given-for-lab{
+        width: 80%;
+        min-height: 80px;
+        margin: auto;
+        background: #f8f9fa85;
+        border: 0px solid black;
+        border-radius: 20px;
+        
+    }
+    .images-given-for-lab img{
+        max-width: 188px;
+        align-self: center;
+    }
+    .sign-up{
+        
+    display: grid;
+    grid-template-columns: auto auto;
+}
+    .post-information{
+        color: aliceblue;
+    }
+  
+</style>
+<div>
+
+    <div class="request-image">
+        <img src="{{post.image}}" alt="" class="req-img-pic">
+</div>
+<div class="post-information">
+    <h2>{{post.instituteref.name}}</h2>
+    <div>
+        <spam class="lab">Name of lab {{post.lab_name}}</spam>
+    </div>
+    <div>
+        <spam class="date">Avilable form {{post.starting_date.date()}} to {{post.ending_date.date()}}</spam>
+    </div>
+    
+    <details><summary>Discription</summary>
+        <p>{{post.discription}}</p></details>
+        <div class="price">{{post.charge_per_slot}}</div>
+    </div>
+</div>
+<div>
+
+    <div class="images-given-for-lab">
+        <img src="" alt="" id="hello">
+</div>
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group" style="
+    padding: 0px 26px;">
+        <label for="date" style="font-size:large;">Select Date</label><br>
+        <div style="display: flex; margin: 10px; background: rgba(255, 255, 255, 0.255);">
+            
+            {% for i in date %}
+            <div > 
+                {% if i[1]==1 %}
+                <label for="date" style="display: inline;">{{i[0].day}}-{{i[0].month}}-{{i[0].year}}</label>
+                <input type="radio" name="date" id="date" value="{{i[0].day}}-{{i[0].month}}-{{i[0].year}}" class="form-control" disabled>
+                
+                {% else %}
+                
+                <label for="date" style="display: inline;">{{i[0].day}}-{{i[0].month}}-{{i[0].year}}</label>
+                <input type="radio" name="date" id="date" value="{{i[0].day}}-{{i[0].month}}-{{i[0].year}}" class="form-control">
+            </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+    <div class="form-group">
+        <label for="number-of-slot-booked">Number of slots required</label>
+        <input type="number" name="number-of-slot-booked" id="number-of-slot-booked" placeholder="Number of slots required" required class="form-control">
+    </div>
+    
+    <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" name="name" id="name" placeholder="Your name" required class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="file" name="profile_pic" id="profile_pic" style="display: none;">
+    <button onclick="document.getElementById('profile_pic').click()" type="button" class="btn btn-secondary">Choose photo id</button>
+</div>
+    <div class="form-group">
+        <label for="uni-book">Booked By Parent Institute</label>
+        <input type="radio" name="book_method" id="uni-book" value="uni_book" class="form-control"><br>
+        <label for="user-book">Booking by user</label>
+        <input type="radio" name="book_method" id="user-book" value="user_book" class="form-control">
+        
+    </div>
+    <button type="submit">Request</button>
+</form>
+</div>
+
+<script>
+    const pre=document.querySelector(".images-given-for-lab");
+const given_img=document.querySelector("#profile_pic");
+const img =document.querySelector("#hello");
+given_img.addEventListener("change", function(){
+    const file=this.files[0];
+    const reader= new FileReader();
+    reader.onload=function(){
+        const result=reader.result;
+        img.src=result;
+    };
+    reader.readAsDataURL(file);
+});
+</script>
+
+{% endblock %}

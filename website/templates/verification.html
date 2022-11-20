@@ -1,0 +1,18 @@
+{% extends "base2.html" %}
+{% block title %}Verifivation{% endblock %}
+
+{% block signupform%}
+<style>h3{
+    text-align: center;
+    color: aliceblue;
+}</style>
+    <h3 >Login</h3>
+    <form method="POST">
+        <div class="form-group">
+            <label for="email">Enter the one time password send to {{mail}} </label>
+            <input type="text" name="otp" id="otp" class="form-control" placeholder="One time password"/>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

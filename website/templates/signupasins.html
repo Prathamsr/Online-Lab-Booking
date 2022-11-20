@@ -1,0 +1,90 @@
+{% extends "base2.html" %}
+{% block title %}Sign up as an Institute{% endblock %}
+
+{% block signupform%}
+<style>
+    .main-box{
+        width: 60%;
+    }
+</style>
+<form method="post" enctype="multipart/form-data">
+    <div class="previewimage">
+        <img src="#" alt="" id="hello" >
+    </div>
+        <h3>Signup as an Institute</h3>
+        <div class="newdisplay" >
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Enter email" required/>
+        </div>
+        <div class="form-group">
+            <label for="firstname">Name</label>
+            <input type="firstname" name="name" id="firstname" class="form-control" placeholder="Enter Name" required/>
+        </div>
+        <div class="form-group">
+            <label for="profile_pic">Choose profile pic</label><br>
+            <input type="file" name="profile_pic" id="profile_pic" class="form-control" style="display: none;" required>
+            <button class="btn btn-secondary" type="button" onclick="document.getElementById('profile_pic').click()"> Choose</button>
+        </div>
+        <div class="form-group"><label for="state">State</label>
+        <select name="state" class="form-control" required>
+            <option value="Andhra Pradesh">Andhra Pradesh</option></option>
+            <option value="Arunachal Pradesh ">Arunachal Pradesh </option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jammu and Kashmir ">Jammu and Kashmir </option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+            <option value="Daman and Diu">Daman and Diu</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="National Capital Territory of Delhi">National Capital Territory of Delhi</option>
+            <option value="Puducherry">Puducherry</option>
+        </select>
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" class="form-control" placeholder="City" required>
+        </div>
+        <div class="form-group">
+            <label for="password1">Password</label>
+            <input type="password" name="password1" id="password1" class="form-control" placeholder="Enter password" required/>
+        </div>
+        <div id="loca">
+           
+        </div>
+        <div class="form-group">
+            <label for="password2">Confirm password</label>
+            <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm password" required/>
+        </div>
+    </div>
+        <button type="submit" class="btn btn-primary" onclick="sentlocation()">Submit</button>
+</form>
+
+{% endblock %}

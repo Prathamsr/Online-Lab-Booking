@@ -1,0 +1,171 @@
+*{
+  margin: 0;
+  font-family: cursive;
+}
+body{
+
+
+  margin: auto;
+}
+.loca{
+  display: none;
+}
+.hidden_stuff{
+  display: none;
+}
+/* Place the navbar at the bottom of the page, and make it stick */
+.navbar {
+    background-color: rgba(72, 144, 231, 0.74);
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    z-index: 4;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .navbar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .navbar a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+/* for filter input*/
+.filter form{
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+.filter form div{
+  margin: 20px;
+  padding: auto;
+}
+.filter form div span{
+  padding: 0px 7px;
+}
+.loca{
+  display: none;
+}
+.main_region_of_home{
+  border: 2px solid black;
+  height: 70vh;
+}
+.main_region_of_home .main-box-home{
+  height: 100%;
+
+
+}
+.main_region_of_home .main-box-home .institute-name{
+  
+  width: auto;
+  height: 8%;
+  background-color:  blue;
+ 
+}
+.main_region_of_home .main-box-home .institute-name .institute-profile{
+  height: 98%;
+  width: 15%;
+  
+}
+.main_region_of_home .main-box-home .institute-name .institute-profile img{
+  height: 93%;
+  width: 7%;
+  border: 1px solid black;
+  border-radius: 100%;
+}
+.main_region_of_home .main-box-home .institute-name .institute-name-ins a{
+  position: relative;
+  top: -13px;
+  left: 9px;
+  font-family: cursive;
+  font-size: medium;
+  background-color: black;
+  color: #ddd;
+}
+.main_region_of_home .main-box-home .labphotos{
+  width: auto;
+  height:57% ;
+  background-color: aqua;
+
+}
+.main_region_of_home .main-box-home .labphotos .previous{
+  position: relative;
+  top: 45%;
+  left: 1px;
+  background: rgba(249, 164, 164, 0.147);
+  height: 10px;
+  width: 10px;
+  border: 0px;
+}
+.main_region_of_home .main-box-home .labphotos .next{
+  position:relative;
+  top: 45%;
+  left: 55vw;
+  background: rgba(249, 164, 164, 0.147);
+  border: 0px;
+}
+
+.main_region_of_home .main-box-home .discription-about-lab{
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  height: 10%;
+  background-color: rgb(61, 22, 215);
+
+}
+.main_region_of_home .main-box-home .book-lab-region{
+  width: 100%;
+  height: 10%;
+  background-color: #04AA6D;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+
+}
+.main_region_of_home .main-box-home .reviews-about-institute{
+  width: auto;
+  height: 15%;
+  background-color: brown;
+}
+.main_region_of_home .main-box-home .reviews-about-institute .review{
+  margin: auto;
+}
+.main_region_of_home .main-box-home .reviews-about-institute .review-user-profile{
+  height: 4vh;
+  width: 3vw;
+  background-color: aqua; 
+}
+.main_region_of_home .main-box-home .reviews-about-institute .review-user-profile img{
+  height: 93%;
+  width: 95%;
+  border: 0px solid black;
+  border-radius: 100%;
+  margin: auto;
+}
+.main_region_of_home .main-box-home .reviews-about-institute .review-user-profile a{
+  position: relative;
+  top: 2px;
+  left: 2px;
+  font-family: cursive;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  font-size: medium;
+  color: #ddd;
+}
