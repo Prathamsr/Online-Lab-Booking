@@ -8,7 +8,7 @@ from flask_login import login_user,login_required,logout_user,current_user
 import os
 from werkzeug.utils import secure_filename
 import uuid as uuid
-
+import random
 import website
 views= Blueprint('views',__name__)
 
@@ -120,13 +120,13 @@ def signupasins():
     return render_template("signupasins.html")
 @views.route('/verification',methods=['GET','POST'])
 def verification():
-    otp=verification(email)
+    global email,firstname,password1,password2,degree_pursuing,parent_institute,pic_profile
+    otp='12345'
     if request.method=='POST':
-        global email,firstname,password1,password2,degree_pursuing,parent_institute,pic_profile
         given_otp=request.form.get('otp')
         if otp==str(given_otp):
             a=email.split('@')
-            new_user=User( email=email, 
+            new_user=User(id=random.randint(111111,999999), email=email, 
             firstname=firstname, 
             type='user',
             username=a[0],
@@ -141,17 +141,17 @@ def verification():
     return render_template('verification.html',mail=email)
 @views.route('/insverification',methods=['GET','POST'])
 def insverification():
-    otp=verification(email)
+    otp='12345'
     if request.method=='POST':
         global email,firstname,password1,password2,latitude,longitude,state,city,pic_profile
         given_otp=request.form.get('otp')
         if otp==str(given_otp):
             with open('website/static/javascript/insname.json','r') as f:
                 l=json.load(f)
-            l.append(firstname.capitalize())
+            l.append(firstname)
             with open('website/static/javascript/insname.json','w') as f:
                 json.dump(l,f)
-            new_user=Institute( email=email,
+            new_user=Institute( id=random.randint(111111,999999),email=email,
             name=firstname,
             type='institute',
             profile_pic='/static/upload/'+pic_profile,
@@ -172,7 +172,7 @@ def information():
         data=dict(request.form)
         print(data)
         if data['sec_off_name']=='':
-            info=Institute_information(primary_office=data['pri_off_name'],
+            info=Institute_information(id=random.randint(111111,999999),primary_office=data['pri_off_name'],
             primary_office_city=data['pri_off_city'],
             primary_office_address=data['pri_off_add'],
             primary_address=data['Pri_address'],
@@ -184,7 +184,7 @@ def information():
             bd.session.add(info)
             bd.session.commit()
         else:
-            info=Institute_information(primary_office=data['pri_off_name'],
+            info=Institute_information(id=random.randint(111111,999999),primary_office=data['pri_off_name'],
             primary_office_city=data['pri_off_city'],
             primary_office_address=data['pri_off_add'],
             primary_address=data['Pri_address'],
@@ -201,7 +201,7 @@ def information():
         for i in data.keys():
             if i.startswith('lab'):
                 if data[i]!='':
-                    labs=Lab_names(name=data[i],institute_information_id=info.id)
+                    labs=Lab_names(id=random.randint(111111,9999999),name=data[i],institute_information_id=info.id)
                     bd.session.add(labs)
                     bd.session.commit()
         return redirect(url_for('auth.home'))

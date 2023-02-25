@@ -266,27 +266,9 @@
         class="profile-image-background"
         style="background-image:  url({{i.image}});"
       >
-        {%if insti.id==i.institute_id%}
-        <div class="parent">
-        <div class="menu-icon">
-          <div class="menu-line"></div>
-          <div class="menu-line"></div>
-          <div class="menu-line"></div>
-        </div>
-        <div class="menu">
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/delete_post">Delete post</a>
-          </button>
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/confirmed">Comfirmed request</a>
-          </button>
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/conformation">Pending requests</a>
-          </button>
-        </div>
-    </div>
+        
+        
   </div>
-        {% endif %}
       </div>
       <div
         class="col-lg-6 order-lg-1 my-auto showcase-text profile-text-background"

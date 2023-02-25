@@ -86,7 +86,7 @@
                     <h2>{{i.instituteref.name}}</h2>
                 </a>
                 <div>
-                    <spam class="lab">Name of lab {{i.lab_name}}</spam>
+                    <spam class="lab">Name of lab: {{i.lab_name}}</spam>
                 </div>
                 <div>
                     <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
@@ -109,7 +109,7 @@
                     <h2>{{i.instituteref.name}}</h2>
                 </a>
                 <div>
-                    <spam class="lab">Name of lab {{i.lab_name}}</spam>
+                    <spam class="lab">Name of lab: {{i.lab_name}}</spam>
                 </div>
                 <div>
                     <spam class="date">Avilable form {{i.starting_date.date()}} to {{i.ending_date.date()}}</spam>
@@ -124,8 +124,22 @@
         {% endif %}
     </div>
 </section>
-    
 {% endfor %}
+<section class="testimonials text-center bg-light">
+    <div class="container">
+        <h2 class="mb-5">Institutes</h2>
+        <div class="row">
+            {%for i in institutes%}
+                <div class="col-lg-4">
+                    <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                        <img class="img-fluid rounded-circle mb-3" src="{{i.profile_pic}}" alt="..." />
+                        <h5>{{i.name}}</h5>
+                    </div>
+                </div>
+            {%endfor%}
+        </div>
+    </div>
+</section>
 {% endblock %}
 <script>  
 </script>

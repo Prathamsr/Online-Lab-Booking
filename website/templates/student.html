@@ -1,82 +1,112 @@
-{% extends "base.html" %}
-{% block title %}Pending Requests{% endblock %}
-
-{% block container%}
-    {% for i in lab %}
-    <section class="showcase">
-        <div class="container-fluid p-0">
-            {% if loop.index%2!=0 %}
-            <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 right text-white showcase-img right" style="background-image:  url({{i.insdataref.image}})"></div>
-                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                    {% if i.userref.parent_institute %}
-                    <h2>Parent Institute {{i.userref.parent_institute}}</h2>
-                        
-                    {% else %}
-                    <h2>Institute booked</h2>
-                    {% endif %}
-                    <div>
-                        <spam class="lab">Name of lab {{i.insdataref.lab_name}}</spam>
-                    </div>
-                    <div>
-                        <spam class="date">Requested for {{i.time}}</spam>
-                    </div>
-                        
-                    
-                        <p>{{i.userref.degree_pusuing}}</p>
-                        <div class="price">{{i.insdataref.charge_per_slot}}</div>
-                        
-                </div>
-            </div>
-                
-            {% else %}
-            <div class="row g-0">
-                <div class="col-lg-6 text-white showcase-img" style="background-image:  url({{i.insdataref.image}})"></div>
-                <div class="col-lg-6 my-auto showcase-text">
-                    {% if i.userref.parent_institute %}
-                    <h2>Parent Institute {{i.userref.parent_institute}}</h2>
-                        
-                    {% else %}
-                    <h2>Institute booked</h2>
-                    {% endif %}
-                    <div>
-                        <spam class="lab">Name of lab {{i.insdataref.lab_name}}</spam>
-                    </div>
-                    <div>
-                        <spam class="date">Requested for {{i.time}}</spam>
-                    </div>
-                        
-                    
-                        <p>{{i.userref.degree_pusuing}}</p>
-                        <div class="price">{{i.insdataref.charge_per_slot}}</div>
-                        
-                </div>
-            </div>
-            {% endif %}
+{% extends "base.html" %} {% block title %}Requests{% endblock %} 
+{% block container%} 
+<center><h2>Confirmed Requests</h2></center><br>
+{% for i in lab %}
+<section class="showcase">
+  <div class="container-fluid p-0">
+    {% if loop.index%2!=0 %}
+    <div class="row g-0">
+      <div
+        class="col-lg-6 order-lg-2 right text-white showcase-img right"
+        style="background-image:  url({{i.insdataref.image}})"
+      ></div>
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <h2>Institute booked: {{i.insdataref.instituteref.name}}</h2>
+        
+        <div>
+          <spam class="lab">Name of lab: {{i.insdataref.lab_name}}</spam>
         </div>
-    </section>
-{% endfor %}
+        <div>
+          <spam class="date">Requested for {{i.time}}</spam>
+        </div>
+        <p>{{i.userref.degree_pusuing}}</p>
+        <div class="price">{{i.insdataref.charge_per_slot}}</div>
+        <form action="{{i.id}}/delete_post_user" method="post">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </div>
+    </div>
 
+    {% else %}
+    <div class="row g-0">
+      <div
+        class="col-lg-6 text-white showcase-img"
+        style="background-image:  url({{i.insdataref.image}})"
+      ></div>
+      <div class="col-lg-6 my-auto showcase-text">
+        
+        <h2>Institute booked: {{i.insdataref.instituteref.name}}</h2>
+        
+        <div>
+          <spam class="lab">Name of lab: {{i.insdataref.lab_name}}</spam>
+        </div>
+        <div>
+          <spam class="date">Requested for {{i.time}}</spam>
+        </div>
+
+        <p>{{i.userref.degree_pusuing}}</p>
+        <div class="price">{{i.insdataref.charge_per_slot}}</div>
+        <form action="{{i.id}}/delete_post_user" method="post">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endfor %}<br>
+<center><h2>Pending Requests</h2></center><br>
 {% for i in ins %}
 <section class="showcase">
-    <div class="container-fluid p-0">
-        <div class="row g-0">
-            <div class="col-lg-6 order-lg-2 right text-white showcase-img right" style="background-image:  url({{i.instituteref.profile_pic}})"></div>
-            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                <h2>Institute name {{i.instituteref.name}}</h2>
-                <div>
-                    <spam class="lab">Name of lab {{i.insdataref.lab_name}}</spam>
-                </div>
-                <div>
-                    <spam class="date">Requested for {{i.time}}</spam>
-                </div>
-                    <p>{{i.no_of_slots}}</p>
-                    <div class="price">{{i.insdataref.charge_per_slot}}</div>
-                    
-            </div>
+  <div class="container-fluid p-0">
+    {% if loop.index%2!=0 %}
+    <div class="row g-0">
+      <div
+        class="col-lg-6 order-lg-2 right text-white showcase-img right"
+        style="background-image:  url({{i.insdataref.image}})"
+      ></div>
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <h2>Institute booked: {{i.insdataref.instituteref.name}}</h2>
+        
+        <div>
+          <spam class="lab">Name of lab: {{i.insdataref.lab_name}}</spam>
         </div>
+        <div>
+          <spam class="date">Requested for {{i.time}}</spam>
+        </div>
+        <p>{{i.userref.degree_pusuing}}</p>
+        <div class="price">{{i.insdataref.charge_per_slot}}</div>
+        <form action="{{i.id}}/delete_post_user" method="post">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </div>
     </div>
+
+    {% else %}
+    <div class="row g-0">
+      <div
+        class="col-lg-6 text-white showcase-img"
+        style="background-image:  url({{i.insdataref.image}})"
+      ></div>
+      <div class="col-lg-6 my-auto showcase-text">
+        
+        <h2>Institute booked: {{i.insdataref.instituteref.name}}</h2>
+        
+        <div>
+          <spam class="lab">Name of lab: {{i.insdataref.lab_name}}</spam>
+        </div>
+        <div>
+          <spam class="date">Requested for {{i.time}}</spam>
+        </div>
+
+        <p>{{i.userref.degree_pusuing}}</p>
+        <div class="price">{{i.insdataref.charge_per_slot}}</div>
+        <form action="{{i.id}}/delete_post_user" method="post">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
 </section>
-    
-{% endfor %}
-{% endblock %}
+{% endfor %} {% endblock %}

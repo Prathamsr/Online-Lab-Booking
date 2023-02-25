@@ -8,11 +8,12 @@ import datetime
 import json
 import random
 from .filter import Create_date, Filter
-from .request import confirm_request
+#from .request import confirm_request
 auth= Blueprint('auth',__name__)
 
 @auth.route('/', methods=['GET','POST'])
 def home():
+    insti=Institute.query.all()
     if request.method=='POST':
         data= dict(request.form)
         req_date=data['date'].split('-')
@@ -23,7 +24,7 @@ def home():
         print(post.posts)
         with open('website/lab_name_present.json','r') as f:
                 l=json.load(f)
-        return render_template('home.html',labs=post.posts,labnames=l)
+        return render_template('home.html',labs=post.posts,labnames=l,user=current_user,institutes=insti)
     lab_random=[]
     all_post=Institutedata.query.all()
     for i in range(6):
@@ -32,15 +33,31 @@ def home():
         lab_random.append(a)
     with open('website/lab_name_present.json','r') as f:
                 l=json.load(f)
-
-    return render_template('home.html',labs=lab_random,labnames=l,user=current_user)
+                
+    
+    return render_template('home.html',labs=lab_random,labnames=l,user=current_user ,institutes=insti)
 
 @auth.route('/requests',methods=['GET','POST'])
 @login_required
 def user_requests():
     pen=Pending_requests.query.filter_by(user_id=current_user.id).all()
-    ilab=Pending_requests_institute.query.filter_by(user_id=current_user.id).all()
-    return render_template('student.html',lab=pen,ins=ilab)
+    ilab=Confirm_payment.query.filter_by(user_id=current_user.id).all()
+    for i in range(len(pen)):
+        a=str(pen[i].time).split(' ')
+        dd=str(pen[i].date).split(' ')
+        a=a[1].split(":")
+        dd=dd[0].split("-")
+        date=datetime.datetime(int(dd[0]),int(dd[1]),int(dd[2]),int(a[0]),int(a[1]),int(a[2]))
+        pen[i].time=date
+    for i in range(len(ilab)):
+        a=str(ilab[i].time).split(' ')
+        dd=str(ilab[i].date).split(' ')
+        a=a[1].split(":")
+        dd=dd[0].split("-")
+        date=datetime.datetime(int(dd[0]),int(dd[1]),int(dd[2]),int(a[0]),int(a[1]),int(a[2]))
+        ilab[i].time=date
+    
+    return render_template('student.html',lab=ilab,ins=pen)
 
 
 @auth.route('/upload' ,methods=['POST','GET'])
@@ -68,7 +85,7 @@ def upload_data():
                     l.sort()
                     with open('website/lab_name_present.json','w') as f:
                         json.dump(l,f)
-            post=Institutedata( lab_name=data['lab_name'].capitalize(),
+            post=Institutedata( id=random.randint(111111,999999),lab_name=data['lab_name'].capitalize(),
             image='/static/upload/'+pic_profile,
             discription=data['discription_about_lab'],
             date_posted=datetime.datetime.now(),
@@ -79,7 +96,7 @@ def upload_data():
             institute_id=current_user.id)
             bd.session.add(post)
             bd.session.commit()
-            time=Timming(starting_of_lab=starting_of_lab,
+            time=Timming(id=random.randint(111111,999999),starting_of_lab=starting_of_lab,
             duration_of_lab=int(data['duration_of_lab']),
             no_of_lab=int(data['no_of_lab_per_day']),
             institutedata_id=post.id)
@@ -89,20 +106,81 @@ def upload_data():
         return render_template('postupload.html')
     else:
         return redirect(url_for('views.signupasins'))
-
-@auth.route('/workshop')
-def upload_workshop(institute):
-    return render_template('workshopupload.html')
-
-@auth.route('/search')
-def search_result():
-    return render_template('search.html')
-
-
+@auth.route('/<post_id>/delete_post')
 @login_required
-@auth.route('/setting')
-def user_secting(user):
-    return render_template('usersetteng')
+def delete_post(post_id):
+    post=Institutedata.query.get(int(post_id))
+    if post.institute_id==current_user.id:
+        pend=Pending_requests.query.filter_by(institutedata_id=int(post_id)).all()
+        conf=Confirm_payment.query.filter_by(institutedata_id=int(post_id)).all()
+        for i in pend:
+            bd.session.delete(i)
+        for i in conf:
+            bd.session.delete(i)
+        bd.session.delete(post)
+        bd.session.commit()
+    return redirect(url_for("auth.profile"))
+
+@auth.route('/<post_id>/delete_post_user',methods=['POST'])
+@login_required
+def delete_post_user(post_id):
+    post=Pending_requests.query.get(int(post_id))
+    if post.user_id==current_user.id:
+        bd.session.delete(post)
+        bd.session.commit()
+    return redirect(url_for("auth.user_requests"))
+
+@auth.route('/<post_id>/conformation')
+@login_required
+def conformation(post_id):
+    post=Institutedata.query.get(int(post_id))
+    lab=Pending_requests.query.filter_by(institutedata_id=int(post_id)).all()
+    return render_template('conformation.html',labs=lab,posts=post)
+
+@auth.route("/<post_id>/confirmed")
+@login_required
+def confirmed(post_id):
+    post=Institutedata.query.get(int(post_id))
+    lab=Confirm_payment.query.filter_by(institutedata_id=int(post_id)).all()
+    return render_template('conformed.html',labs=lab,posts=post)
+
+@auth.route('/<req_id>/confirm',methods=['GET','POST'])
+@login_required
+def confirm_req(req_id):
+    if request.method=='POST':
+        lab=Pending_requests.query.get(int(req_id))
+        if lab.insdataref.institute_id==current_user.id:
+            new_con_req=Confirm_payment(id=random.randint(111111,999999),
+            user=lab.userref.username,
+            lab=lab.insdataref.lab_name,
+            verification_id=lab.verification_id,
+            date=lab.date,
+            time=lab.time,
+            institutedata_id=lab.institutedata_id,
+            user_id=lab.user_id
+            )
+            bd.session.add(new_con_req)
+            bd.session.delete(lab)
+            bd.session.commit()
+
+    return redirect(f"/{lab.institutedata_id}/confirmed")
+
+@auth.route('/<req_id>/delete',methods=['GET','POST'])
+@login_required
+def delete_req(req_id):
+    if request.method=='POST':
+        lab=Pending_requests.query.get(int(req_id))
+        if current_user.type=='user':
+            if lab.user_id==current_user.id:
+                bd.session.delete(lab)
+                bd.session.commit()
+            return redirect(url_for('auth.user_requests'))
+        else:
+            if lab.insdataref.institute_id==current_user.id:
+                bd.session.delete(lab)
+                bd.session.commit()
+            return redirect(f"/{lab.institutedata_id}/confirmed")
+    return redirect("/")
 
 @auth.route('/<post_id>/request',methods=['GET','POST'])
 @login_required
@@ -114,38 +192,28 @@ def send_institute_request(post_id):
     if request.method=='POST':
         data=dict(request.form)
         print(data)
-        if data['book_method']=='user_book':
-            profile_pic=request.files['profile_pic']
-            pro=profile_pic.filename.split('.')
-            pic_profile=str(uuid.uuid1())+'.'+pro[-1]
-            prath=os.path.join(app.config['Upload_folder'],pic_profile)
-            profile_pic.save(prath)
-            date=data['date'].split('-')
-            date=datetime.datetime(int(date[2]),int(date[1]),int(date[0]))
-            for i in range(int(data['number-of-slot-booked'])):
-                hello=req_date.givetiming(date)
-                obj=Pending_requests(date=date,
-                time=hello,
-                verification_id='/static/upload/'+pic_profile,
-                institutedata_id=post_id,
-                user_id=current_user.id)
-                bd.session.add(obj)
-                bd.session.commit()
-        else:
-            date=data['date'].split('-')
-            date=datetime.datetime(int(date[2]),int(date[1]),int(date[0]))
+        profile_pic=request.files['profile_pic']
+        pro=profile_pic.filename.split('.')
+        pic_profile=str(uuid.uuid1())+'.'+pro[-1]
+        prath=os.path.join(app.config['Upload_folder'],pic_profile)
+        profile_pic.save(prath)
+        date=data['date'].split('-')
+        date=datetime.datetime(int(date[2]),int(date[1]),int(date[0]))
+        for i in range(int(data['number-of-slot-booked'])):
             hello=req_date.givetiming(date)
-            obj=Pending_requests_institute(date=date,
+            obj=Pending_requests(id=random.randint(111111,999999),date=date,
             time=hello,
-            no_of_slots=int(data['number-of-slot-booked']),
+            verification_id='/static/upload/'+pic_profile,
             institutedata_id=post_id,
             user_id=current_user.id)
             bd.session.add(obj)
             bd.session.commit()
-
         return redirect(url_for('auth.user_requests'))
     return render_template('request.html',date=req_date.dates,post=lab)
 
+@auth.route('/search')
+def search_result():
+    return render_template('search.html')
 
 @auth.route('/<insname>/profile')
 def search_profile(insname):
@@ -155,20 +223,49 @@ def search_profile(insname):
         posts=Institutedata.query.filter_by(institute_id=pro.id).all()
         if info:
             lab_offer=Lab_names.query.filter_by(institute_information_id=info.id).all()
-            return render_template('s.html',insti=pro,labs=lab_offer,data=info,post=posts)
+            return render_template('searchprofile.html',insti=pro,labs=lab_offer,data=info,post=posts)
         else:
-            return render_template('s.html',insti=pro,labs=[1,2],data=[],post=posts)
+            return render_template('searchprofile.html',insti=pro,labs=[1,2],data=[],post=posts)
     else:
         return "Institute does not provide lab on this platform"
+
+@auth.route('/<name>/user')
+def user_profile(name):
+    user=User.query.filter_by(username=name).first()
+    if user:
+        posts=Pending_requests.query.filter_by(user_id=user.id).all()
+        posts_con=Confirm_payment.query.filter_by(user_id=user.id).all()
+        posts=posts+posts_con
+        print(posts)
+        lab=[]
+        for i in posts:
+            curr=i.insdataref.lab_name
+            if curr not in lab:
+                lab.append(curr)
+        print(lab)
+        return render_template("userprofile.html",insti=user,labs=lab)
+    else:
+        return "User does not exist"
+
 @auth.route('/profile')
 @login_required
 def profile():
-    
-    info=Institute_information.query.filter_by(institute_id=current_user.id).first()
-    posts=Institutedata.query.filter_by(institute_id=current_user.id).all()
-    if info:
-        lab_offer=Lab_names.query.filter_by(institute_information_id=info.id).all()
+    if current_user.type=="user":
+        posts=Pending_requests.query.filter_by(user_id=current_user.id).all()
+        posts_con=Confirm_payment.query.filter_by(user_id=current_user.id).all()
+        posts=posts+posts_con
+        print(posts)
+        lab=[]
         for i in posts:
-            pass
-        return render_template('s.html',insti=current_user,labs=lab_offer,data=info,post=posts)
-    return render_template('s.html',insti=current_user,labs=[1,2,3],data=info,post=posts)
+            curr=i.insdataref.lab_name
+            if curr not in lab:
+                lab.append(curr)
+        print(lab)
+        return render_template("userprofile.html",insti=current_user,labs=lab)
+    else:    
+        info=Institute_information.query.filter_by(institute_id=current_user.id).first()
+        posts=Institutedata.query.filter_by(institute_id=current_user.id).all()
+        if info:
+            lab_offer=Lab_names.query.filter_by(institute_information_id=info.id).all()
+            return render_template('s.html',insti=current_user,labs=lab_offer,data=info,post=posts)
+        return render_template('s.html',insti=current_user,labs=[1,2,3],data=info,post=posts)

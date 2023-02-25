@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Pending Requests{% endblock %}
+{% block search %}
+    <style>a{
+        text-decoration: none;
+        color: aliceblue;
+    }
+    table{
+        border:2px:
+        margin:5px;
+        
+    }
+    button{
+        margin: 9px;
+        width: 100px;
+    }td{
+        border:2px solid black;
+    padding: 10PX;
+    text-align: center;
+    border-radius:10px;
+    }th{
+        padding: 10px;
+        border:2px solid black;
+    }
+    tr{
+        border:2px solid black;
+        border-radius:10px;
+        margin:5px;
+    }
+    </style>
+    <div class="row g-0" style="height: 400px;">
+        <div class="col-lg-6 order-lg-2 right text-white showcase-img right" style="background-image:  url('{{posts.image}}');background-repeat: no-repeat; background-size: cover;"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+            <div>
+                <spam class="lab">Name of lab {{posts.lab_name}}</spam>
+            </div>
+            <div>
+                <spam class="date">Avilable form {{posts.starting_date.date()}} to {{posts.ending_date.date()}}</spam>
+            </div>
+                
+            <details><summary>Discription</summary>
+                <p>{{posts.discription}}</p>
+            </details>
+                <div class="price">{{posts.charge_per_slot}}</div>
+                <div class="sharewithothers">Share</div>        
+                
+        </div>
+    </div>
+    <div style="margin:5px; display:flex; margin:10px;">
+        <table border='2px'>
+            <tr>
+                <th>User name</th>
+                <th>Verfication ID</th>
+                <th>Date and time</th>
+                <th>Email</th>
+                <th>Degree Pursuing</th>
+                <th>Parent institute</th>
+                <th>Confirm or Delete</th>
+            </tr>
+            {% for i in labs %}
+            <tr>
+                <td><a style="color: rgb(9, 135, 245);" href="/{{i.userref.username}}/user">{{i.userref.firstname}}</a></td>
+                <td><img src="{{i.verification_id}}" alt="" width="300px" height="150px"/></td>
+                <td>{{i.date.date()}} <br> {{i.time.time()}} </td>
+                <td>{{i.userref.email}}</td>
+                <td>{{i.userref.degree_pursuing}}</td>
+                <td>{{i.userref.parent_institute}}</td>
+                <td><form action="/{{i.id}}/confirm" method="POST">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </form>
+                <form action="/{{i.id}}/delete" method="POST">
+                    <button type="submit" class="btn btn-primary">Delete</button></td>
+                </form>
+            </tr>
+            {%endfor%}
+        </table>
+
+    </div>
+    {% endblock %}

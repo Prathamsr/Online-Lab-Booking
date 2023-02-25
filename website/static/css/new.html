@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style1.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/responsive.css') }}"
+    />
+    <!-- Favicon-->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static',filename='assets/favicon.ico')}}"
+    />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <style>
+      .menu_button_btn{
+        width:130px;
+        background-color: rgba(104, 115, 124, 0.047);
+        border-radius: 20px;
+    margin: 2px;
+    background-color: rgba(255, 255, 255, 0.617);
+      }
+      .menu_button_btn a{
+        text-decoration: none;
+        color: black;
+      }
+      a {
+        text-decoration: none;
+        color: aliceblue;
+      }
+      button {
+        margin: 9px;
+        width: 100px;
+      }
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        padding: 10px;
+      }
+
+      .menu-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 5px;
+        height: 25px;
+        cursor: pointer;
+      }
+
+      .menu-line {
+        width: 100%;
+        height: 3px;
+        background-color: black;
+        margin-bottom: 5px;
+      }
+
+      .menu {
+        visibility: hidden;
+        position: absolute;
+        display: block;
+        top: 40px;
+        right: 0;
+        width: 150px;
+        background-color: white;
+      }
+
+      .menu.show {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row g-0" style="height: 400px">
+      <div
+        class="col-lg-6 order-lg-2 right text-white showcase-img right"
+        style="background-image: url('bg-showcase-2.jpg');background-repeat: no-repeat; background-size: cover;" 
+      ></div>
+      <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+        <div>
+          <spam class="lab">Name of lab {{i.lab_name}}</spam>
+        </div>
+        <div>
+          <spam class="date"
+            >Avilable form {{i.starting_date.date()}} to
+            {{i.ending_date.date()}}</spam
+          >
+        </div>
+
+        <details>
+          <summary>Discription</summary>
+          <p>{{i.discription}}</p>
+        </details>
+        <div class="price">{{i.charge_per_slot}}</div>
+        <div class="sharewithothers">Share</div>
+        <!--div class="book-lab-region-book"><button class="btn btn-primary "><a href="{{i.id}}/request" style="color: white; text-decoration: none;">Book</a></--div-->
+      </div>
+    </div>
+    <div>
+      <div class="parent">
+        <div class="menu-icon">
+          <div class="menu-line"></div>
+          <div class="menu-line"></div>
+          <div class="menu-line"></div>
+        </div>
+        <div class="menu">
+          <button class="menu_button_btn"><a href="">Delete post</a></button>
+          <button class="menu_button_btn"><a href="">Comfirmed request</a></button>
+          <button class="menu_button_btn"><a href="">Pending requests</a></button>
+        </div>
+      </div>
+
+      <table>
+        <tr>
+          <th>User name</th>
+          <th>Verfication ID</th>
+          <th>Date and time</th>
+          <th>Email</th>
+          <th>Degree Pursuing</th>
+          <th>Parent institute</th>
+          <th>Confirm or Delete</th>
+        </tr>
+        <tr>
+          <td>{{i.userref.firstname}}</td>
+          <td>
+            <img
+              src="{{i.verification_id}}"
+              alt=""
+              width="300px"
+              height="150px"
+            />
+          </td>
+          <td>
+            {{i.date}} <br />
+            {{i.time}}
+          </td>
+          <td>{{i.userref.email}}</td>
+          <td>{{i.userref.degree_pursuing}}</td>
+          <td>{{i.useref.parent_institute}}</td>
+          <td>
+            <form action="{{i.id}}/confirm" method="POST">
+              <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+            <form action="{{i.id}}/delete" method="POST">
+              <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+
+    <script>
+      const menuIcon = document.querySelector(".menu-icon");
+      const menu = document.querySelector(".menu");
+
+      menuIcon.addEventListener("click", () => {
+        menu.classList.toggle("show");
+      });
+    </script>
+  </body>
+</html>

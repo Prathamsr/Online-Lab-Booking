@@ -138,7 +138,7 @@
               height="40px"
             />
           </figure>
-          <span>{{insti.name}}</span>
+          <span>{{insti.username}}</span>
         </div>
       </header>
 
@@ -160,33 +160,27 @@
       <section class="work_skills card" style="margin: 5px;">
         <!-- ===== ===== Work Contaienr ===== ===== -->
         <div class="work">
-          <h1 class="heading">Offices</h1>
+          <h1 class="heading">Information</h1>
 
           <div class="primary">
-            <h1>{{ data.primary_office}}</h1>
-            <span>Primary</span>
-            <p>
-              {{ data.primary_office_city }} <br />{{
-              data.primary_office_address}}
-            </p>
+            <h1>{{insti.parent_institute}}</h1>
+            <span>College</span>
           </div>
+        </br>
+    
 
           <div class="secondary">
-            <h1>{{data.secondary_office}}</h1>
-            <span>Secondary</span>
-            <p>
-              {{ data.secondary_office_city }}<br />{{
-              data.secondary_office_address}}
-            </p>
+            <h1>{{insti.degree_pursuing}}</h1>
+            <span>Degree Pursuing</span>
           </div>
         </div>
-
+    </br>
         <!-- ===== ===== Skills Contaienr ===== ===== -->
         <div class="skills">
-          <h1 class="heading">Laboratories to offer</h1>
+          <h1 class="heading">Interrested In</h1>
           <ul>
             {% for i in labs %}
-            <li style="--i:{{loop.index}}">{{i.name}}</li>
+            <li style="--i:{{loop.index}}">{{i}}</li>
             {% endfor %}
           </ul>
         </div>
@@ -195,11 +189,11 @@
       <!-- ===== ===== User Details Sections ===== ===== -->
       <section class="userDetails card" style="margin: 5px;">
         <div class="userName">
-          <h1 class="name">{{insti.name}}</h1>
+          <h1 class="name">{{insti.firstname}}</h1>
           <div class="map">
             <i class="ri-map-pin-fill ri"></i>
           </div>
-          <p>{{data.speciality}}</p>
+          <p>{{insti.parent_institute}}</p>
         </div>
 
         <div class="btns">
@@ -236,104 +230,12 @@
           <h1 class="heading">Contact Information</h1>
           <ul>
             <li class="phone">
-              <h1 class="label">Phone:</h1>
-              <span class="info">{{data.Contact_no}}</span>
-            </li>
-
-            <li class="address">
-              <h1 class="label">Address:</h1>
-              <span class="info"
-                >{{data.primary_address}} <br />{{insti.city}},{{insti.state
-                }}</span
-              >
-            </li>
-
-            <li class="email">
-              <h1 class="label">E-mail:</h1>
-              <span class="info">{{data.email}}</span>
-            </li>
-
-            <li class="site">
-              <h1 class="label">Site:</h1>
-              <span class="info">{{data.Website}}</span>
+              <h1 class="label">Email:</h1>
+              <span class="info">{{insti.email}}</span>
             </li>
           </ul>
         </div>
       </section>
-      {% for i in post %}
-      <div style="background-color: rgba(255, 255, 255, 0.389); display: flex; align-items: center; margin:5px; border-radius:10px;">
-      <div
-        class="profile-image-background"
-        style="background-image:  url({{i.image}});"
-      >
-        {%if insti.id==i.institute_id%}
-        <div class="parent">
-        <div class="menu-icon">
-          <div class="menu-line"></div>
-          <div class="menu-line"></div>
-          <div class="menu-line"></div>
-        </div>
-        <div class="menu">
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/delete_post">Delete post</a>
-          </button>
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/confirmed">Comfirmed request</a>
-          </button>
-          <button class="menu_button_btn">
-            <a href="{{i.id}}/conformation">Pending requests</a>
-          </button>
-        </div>
-    </div>
-  </div>
-        {% endif %}
-      </div>
-      <div
-        class="col-lg-6 order-lg-1 my-auto showcase-text profile-text-background"
-        style="margin: 5px;">
-        <div>
-          <h2>
-            <spam class="lab">{{i.lab_name}}</spam>
-          </h2>
-        </div>
-        <div>
-          <spam class="date"
-            >Avilable form {{i.starting_date.date()}} to
-            {{i.ending_date.date()}}</spam
-          >
-        </div>
-
-        <details>
-          <summary>Discription</summary>
-          <p>{{i.discription}}</p>
-        </details>
-        <div class="book-lab-region-book">
-          <button class="btn btn-primary">
-            <a
-              href="/{{i.id}}/request"
-              style="color: white; text-decoration: none"
-              >Book</a
-            >
-          </button>
-        </div>
-        <div class="price">{{i.charge_per_slot}}</div>
-        <div class="sharewithothers">Share</div>
-      </div>
- {% endfor %}
   </body>
-  <script>
-    function addMenuToggle(menuIcon, menu) {
-      menuIcon.addEventListener('click', () => {
-        menu.classList.toggle('show');
-      });
-    }
-    
-    const menuIcons = document.querySelectorAll('.menu-icon');
-    const menus = document.querySelectorAll('.menu');
-    
-    for (let i = 0; i < menuIcons.length; i++) {
-      addMenuToggle(menuIcons[i], menus[i]);
-    }
-    
-  </script>
+  
 </html>

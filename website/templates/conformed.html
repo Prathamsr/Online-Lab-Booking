@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% block title %}Confirmed Request{% endblock %} 
+{% block search %}<style>
+  a{
+      text-decoration: none;
+      color: aliceblue;
+  }
+  able{
+      border:2px:
+      margin:5px;
+
+  }
+  button{
+      margin: 9px;
+      width: 100px;
+  }td{
+  padding: 10PX;
+  text-align: center;
+  border: 2px solid black;
+  border-radius:10px;
+  tr{
+    border:2px solid black;
+    border-radius:10px;
+
+  }
+  }th{
+      padding: 10px;
+      border: 2px solid black;
+  }
+</style>
+<div class="row g-0" style="height: 400px; margin:10px;">
+  <div
+    class="col-lg-6 order-lg-2 right text-white showcase-img right"
+    style="background-image:  url('{{posts.image}}');background-repeat: no-repeat; background-size: cover;"
+  ></div>
+  <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+    <div>
+      <spam class="lab">Name of lab: {{posts.lab_name}}</spam>
+    </div>
+    <div>
+      <spam class="date"
+        >Avilable form {{posts.starting_date.date()}} to
+        {{posts.ending_date.date()}}</spam
+      >
+    </div>
+
+    <details>
+      <summary>Discription</summary>
+      <p>{{posts.discription}}</p>
+    </details>
+    <div class="price">{{posts.charge_per_slot}}</div>
+    <div class="sharewithothers">Share</div>
+  </div>
+</div>
+<div style="margin:5px; display:flex;">
+  <table border="2px">
+    <tr style="border:2px solid black">
+      <th>User name</th>
+      <th>Verfication ID</th>
+      <th>Date and time</th>
+      <th>Email</th>
+      <th>Degree Pursuing</th>
+      <th>Parent institute</th>
+    </tr>
+    {% for i in labs %}
+    <tr style="border:2px solid black;">
+      <td><a style="color: rgb(9, 135, 245);" href="/{{i.userref.username}}/user">{{i.userref.firstname}}</a></td>
+      <td>
+        <img src="{{i.verification_id}}" alt="" width="300px" height="150px" />
+      </td>
+      <td>
+        {{i.date.date()}} <br />
+        {{i.time.time()}}
+      </td>
+      <td>{{i.userref.email}}</td>
+      <td>{{i.userref.degree_pursuing}}</td>
+      <td>{{i.userref.parent_institute}}</td>
+    </tr>
+    {%endfor%}
+  </table>
+</div>
+{% endblock %}

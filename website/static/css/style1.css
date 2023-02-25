@@ -169,3 +169,6 @@ body{
   font-size: medium;
   color: #ddd;
 }
+a:hover{
+  color: aliceblue;
+}

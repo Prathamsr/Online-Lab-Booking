@@ -56,47 +56,56 @@ class Create_date:
     def __init__(self,object):
         self.object=object
         self.find_date()
+        self.timing=Timming.query.filter_by(institutedata_id=self.object.id).first()
     def find_date(self):
-        self.dates=[]
-        a=self.object.starting_date
-        while a<=self.object.ending_date:
-            x=Pending_requests.query.filter_by(date=a).all()
-            k=Pending_requests_institute.query.filter_by(date=a).all()
-            add=0
-            if len(k)>0:
-                for i in k:
-                    add=add+i.no_of_slots
-            self.y=Timming.query.filter_by(institutedata_id=self.object.id).first()
-            try:
-                if (len(x)+add)>(self.y.insdataref.no_of_slots_per_lab)*(self.y.no_of_lab):
-                    self.dates.append([a,1])
+        pending_requests_total=Pending_requests.query.filter_by(institutedata_id=self.object.id)
+        confirm_requests=Confirm_payment.query.filter_by(institutedata_id=self.object.id).all()
+        start=self.object.starting_date
+        try:
+            length=len(pending_requests_total)+len(confirm_requests)
+        except:
+            length=0
+        if length>0:
+            no_of_slots=self.object.no_of_slots_per_lab
+            no_of_labs_per_day=self.timing.no_of_labs
+            total_slots=no_of_labs_per_day*no_of_slots
+            while True:
+                if length>total_slots:
+                    start=start+datetime.timedelta(days=1)
+                    length=length-total_slots
                 else:
-                    self.dates.append([a,0])
-            except:
-                self.dates.append([a,0])
-            a=a+datetime.timedelta(days=1)
-
+                    break
+        dates=[]
+        while start<=self.object.ending_date:
+            da=str(start).split(" ")
+            da=da[0].split("-")
+            dates.append(da)
+            start=start+datetime.timedelta(days=1)
+        print("hell",dates)
+        self.dates=dates
     def givetiming(self,date):
-        x=Pending_requests.query.filter_by(date=date).all()
-        k=Pending_requests_institute.query.filter_by(date=date).all()
-        add=0
-        if len(k)>0:
-            for i in k:
-                add=add+i.no_of_slots
-        print(x)
-        if len(x)>0:
-
-            no_of_booked=len(x)+add
-            no_of_slots_per_lab=(self.y.institutedataref.no_of_slots_per_lab)
-            if no_of_booked<self.y.institutedataref.no_of_slots_per_lab:
-                times=self.y.starting_of_lab
-                for i in range(self.y.no_of_lab):
-                    hell=Pending_requests.query.filter_by(time=times).all()
-                    if hell[0]:
-                        z=len(hell)
-                        if z<no_of_slots_per_lab:
-                            return times
-                times=times+datetime.timedelta(hours=self.y.duration_of_lab)
-        else:
-            times=self.y.starting_of_lab
-            return times
+        pending_requests_total=Pending_requests.query.filter_by(institutedata_id=self.object.id).all()
+        confirm_requests=Confirm_payment.query.filter_by(institutedata_id=self.object.id).all()
+        start=self.object.starting_date
+        starting_time=self.timing.starting_of_lab
+        length=len(pending_requests_total)+len(confirm_requests)
+        if length>0:
+            no_of_slots=self.object.no_of_slots_per_lab
+            no_of_labs_per_day=self.timing.no_of_lab
+            total_slots=no_of_labs_per_day+no_of_slots
+            while True:
+                if length>total_slots:
+                    start=start+datetime.timedelta(days=1)
+                    length=length-total_slots
+                else:
+                    while True:
+                        if length>no_of_slots:
+                            length=length-no_of_slots
+                            starting_time=starting_time+datetime.timedelta(hours=self.y.duration_of_lab)
+                        else:
+                            break
+                    break    
+        return starting_time
+        
+    
+    

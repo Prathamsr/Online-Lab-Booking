@@ -1,9 +1,10 @@
 from . import bd
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+import random
 
 class User(bd.Model, UserMixin):
-    id = bd.Column(bd.Integer, primary_key=True)
+    id = bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     username=bd.Column(bd.String(150), unique=True)
     type=bd.Column(bd.String(20))
     profile_pic=bd.Column(bd.String(250))
@@ -14,11 +15,10 @@ class User(bd.Model, UserMixin):
     parent_institute=bd.Column(bd.String(150))
     upcoming_labs=bd.relationship('Userdata',backref='userref')
     pending_requests=bd.relationship('Pending_requests',backref='userref')
-
     confirm_payment=bd.relationship('Confirm_payment',backref='userref')
 
 class Institute(bd.Model, UserMixin):
-    id = bd.Column(bd.Integer, primary_key=True)
+    id = bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     email= bd.Column(bd.String(150), unique=True)
     type=bd.Column(bd.String(20))
     name=bd.Column(bd.String(300))
@@ -33,7 +33,7 @@ class Institute(bd.Model, UserMixin):
     institute_information=bd.relationship('Pending_requests_institute',backref='instituteref')
 
 class Institute_information(bd.Model):
-    id=bd.Column(bd.Integer, primary_key=True)
+    id=bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     primary_office=bd.Column(bd.String(200))
     primary_office_city=bd.Column(bd.String(100))
     primary_office_address=bd.Column(bd.String(200))
@@ -50,12 +50,12 @@ class Institute_information(bd.Model):
 
 
 class Lab_names(bd.Model):
-    id=bd.Column(bd.Integer, primary_key=True)
+    id=bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     name=bd.Column(bd.String(150))
     institute_information_id=bd.Column(bd.Integer, bd.ForeignKey('institute_information.id'))
 
 class Workshop_information(bd.Model):
-    id=bd.Column(bd.Integer,primary_key=True)
+    id=bd.Column(bd.Integer,primary_key=True,default=random.randint(111111,999999))
     pic=bd.column(bd.LargeBinary)
     description=bd.column(bd.String(500))
     date_of_workshop=bd.Column(bd.DateTime(timezone=True))
@@ -66,7 +66,7 @@ class Workshop_information(bd.Model):
     institute_id=bd.Column(bd.Integer, bd.ForeignKey('institute.id'))
     
 class Institutedata(bd.Model):
-    id=bd.Column(bd.Integer, primary_key=True)
+    id=bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     lab_name=bd.Column(bd.String(150))
     image=bd.Column(bd.String(200))
     discription=bd.Column(bd.String(500))
@@ -83,7 +83,7 @@ class Institutedata(bd.Model):
 
 
 class Userdata(bd.Model):
-    id=bd.Column(bd.Integer, primary_key=True)
+    id=bd.Column(bd.Integer, primary_key=True,default=random.randint(111111,999999))
     name_of_institute=bd.Column(bd.String(300))
     name_of_lab=bd.Column(bd.String(150))
     date_of_practical=bd.Column(bd.DateTime(timezone=True))
@@ -92,7 +92,7 @@ class Userdata(bd.Model):
     user_id=bd.Column(bd.Integer,bd.ForeignKey('user.id'))
 
 class Timming(bd.Model):
-    id=bd.Column(bd.Integer,primary_key=True)
+    id=bd.Column(bd.Integer,primary_key=True,default=random.randint(111111,999999))
     starting_of_lab=bd.Column(bd.DateTime(timezone=True))
     duration_of_lab=bd.Column(bd.Integer)
     no_of_lab=bd.Column(bd.Integer)
@@ -100,7 +100,7 @@ class Timming(bd.Model):
 
 
 class Pending_requests(bd.Model):
-    id=bd.Column(bd.Integer,primary_key=True)
+    id=bd.Column(bd.Integer,primary_key=True,default=random.randint(111111,999999))
     date=bd.Column(bd.DateTime(timezone=True))
     time=bd.Column(bd.DateTime(timezone=True))
     verification_id=bd.Column(bd.String(200))
@@ -108,7 +108,7 @@ class Pending_requests(bd.Model):
     user_id=bd.Column(bd.Integer,bd.ForeignKey('user.id'))
 
 class Pending_requests_institute(bd.Model):
-    id=bd.Column(bd.Integer,primary_key=True)
+    id=bd.Column(bd.Integer,primary_key=True,default=random.randint(111111,999999))
     date=bd.Column(bd.DateTime(timezone=True))
     time=bd.Column(bd.DateTime(timezone=True))
     no_of_slots=bd.Column(bd.Integer)
@@ -116,9 +116,10 @@ class Pending_requests_institute(bd.Model):
     user_id=bd.Column(bd.Integer,bd.ForeignKey('institute.id'))
 
 class Confirm_payment(bd.Model):
-    id=bd.Column(bd.Integer,primary_key=True)
+    id=bd.Column(bd.Integer,primary_key=True,default=random.randint(111111,999999))
     user=bd.Column(bd.String(150))
     lab=bd.Column(bd.String(150))
+    verification_id=bd.Column(bd.String(200))
     date=bd.Column(bd.DateTime(timezone=True))
     time=bd.Column(bd.DateTime(timezone=True))
     institutedata_id=bd.Column(bd.Integer,bd.ForeignKey('institutedata.id'))
