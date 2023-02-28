@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,request, url_for,redirect
+from flask import Blueprint,render_template,request, url_for,redirect,flash
 from flask_login import login_required,current_user
 from . import app
 import os
@@ -27,7 +27,7 @@ def home():
         return render_template('home.html',labs=post.posts,labnames=l,user=current_user,institutes=insti)
     lab_random=[]
     all_post=Institutedata.query.all()
-    for i in range(6):
+    for i in range(10):
         a=random.choice(all_post)
         all_post.remove(a)
         lab_random.append(a)
@@ -162,8 +162,30 @@ def confirm_req(req_id):
             bd.session.add(new_con_req)
             bd.session.delete(lab)
             bd.session.commit()
+    return redirect(f"/{lab.institutedata_id}/confirm")
 
-    return redirect(f"/{lab.institutedata_id}/confirmed")
+@auth.route("/<post_id>/confirm_all",methods=['post'])
+@login_required
+def confirm_all(post_id):
+    post=Institutedata.query.get(int(post_id))
+    if current_user.id==post.institute_id:
+        request=Pending_requests.query.filter_by(institutedata_id=post.id).all()
+        for i in request:
+            lab=i
+            new_con_req=Confirm_payment(id=random.randint(111111,999999),
+            user=lab.userref.username,
+            lab=lab.insdataref.lab_name,
+            verification_id=lab.verification_id,
+            date=lab.date,
+            time=lab.time,
+            institutedata_id=lab.institutedata_id,
+            user_id=lab.user_id
+            )
+            bd.session.add(new_con_req)
+            bd.session.delete(lab)
+            bd.session.commit()
+    return redirect(f"/{post_id}/confirmed")
+
 
 @auth.route('/<req_id>/delete',methods=['GET','POST'])
 @login_required
@@ -185,31 +207,36 @@ def delete_req(req_id):
 @auth.route('/<post_id>/request',methods=['GET','POST'])
 @login_required
 def send_institute_request(post_id):
-    lab=Institutedata.query.get(int(post_id))
-    req_date=Create_date(lab)
-    print(req_date.dates)
+    if current_user.type=="user":
+        lab=Institutedata.query.get(int(post_id))
+        req_date=Create_date(lab)
+        print(req_date.dates)
    
-    if request.method=='POST':
-        data=dict(request.form)
-        print(data)
-        profile_pic=request.files['profile_pic']
-        pro=profile_pic.filename.split('.')
-        pic_profile=str(uuid.uuid1())+'.'+pro[-1]
-        prath=os.path.join(app.config['Upload_folder'],pic_profile)
-        profile_pic.save(prath)
-        date=data['date'].split('-')
-        date=datetime.datetime(int(date[2]),int(date[1]),int(date[0]))
-        for i in range(int(data['number-of-slot-booked'])):
-            hello=req_date.givetiming(date)
-            obj=Pending_requests(id=random.randint(111111,999999),date=date,
-            time=hello,
-            verification_id='/static/upload/'+pic_profile,
-            institutedata_id=post_id,
-            user_id=current_user.id)
-            bd.session.add(obj)
-            bd.session.commit()
-        return redirect(url_for('auth.user_requests'))
-    return render_template('request.html',date=req_date.dates,post=lab)
+        if request.method=='POST':
+            data=dict(request.form)
+            print(data)
+            profile_pic=request.files['profile_pic']
+            pro=profile_pic.filename.split('.')
+            pic_profile=str(uuid.uuid1())+'.'+pro[-1]
+            prath=os.path.join(app.config['Upload_folder'],pic_profile)
+            profile_pic.save(prath)
+            date=data['date'].split('-')
+            date=datetime.datetime(int(date[2]),int(date[1]),int(date[0]))
+            for i in range(int(data['number-of-slot-booked'])):
+                hello=req_date.givetiming(date)
+                obj=Pending_requests(id=random.randint(111111,999999),date=date,
+                time=hello,
+                verification_id='/static/upload/'+pic_profile,
+                institutedata_id=post_id,
+                user_id=current_user.id)
+                bd.session.add(obj)
+                bd.session.commit()
+            return redirect(url_for('auth.user_requests'))
+        return render_template('request.html',date=req_date.dates[:5],post=lab)
+    else:
+        flash('SignUp as Student', category='warning')
+        return redirect (url_for("views.signup"))
+            
 
 @auth.route('/search')
 def search_result():

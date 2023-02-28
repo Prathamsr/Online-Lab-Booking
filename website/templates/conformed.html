@@ -1,5 +1,18 @@
 {% extends "base.html" %} {% block title %}Confirmed Request{% endblock %} 
 {% block search %}<style>
+  body{
+    background-image: url({{ url_for('static', filename='css/photo-1477346611705-65d1883cee1e.png') }});
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.main-box{
+    position: inherit;
+margin: 40px 20px;
+background-color:#f8faf974;
+border: 0px solid;
+border-radius: 20px;
+padding: 10px;
+}
   a{
       text-decoration: none;
       color: aliceblue;
@@ -27,7 +40,10 @@
       border: 2px solid black;
   }
 </style>
-<div class="row g-0" style="height: 400px; margin:10px;">
+<div class="main-box">
+<div class="row g-0" style="height: 400px; margin:10px; background-color: #f8faf962;
+        padding: 10px;
+        border-radius: 20px;">
   <div
     class="col-lg-6 order-lg-2 right text-white showcase-img right"
     style="background-image:  url('{{posts.image}}');background-repeat: no-repeat; background-size: cover;"
@@ -50,8 +66,9 @@
     <div class="price">{{posts.charge_per_slot}}</div>
     <div class="sharewithothers">Share</div>
   </div>
-</div>
-<div style="margin:5px; display:flex;">
+</div>   <div style="margin:5px; display:flex; margin:10px; background-color: #f8faf962;
+padding: 10px;
+border-radius: 20px;">
   <table border="2px">
     <tr style="border:2px solid black">
       <th>User name</th>
@@ -77,5 +94,6 @@
     </tr>
     {%endfor%}
   </table>
+</div>
 </div>
 {% endblock %}

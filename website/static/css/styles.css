@@ -11340,7 +11340,8 @@ header.masthead h1, header.masthead .h1 {
 }
 @media (min-width: 768px) {
   .showcase .showcase-text {
-    padding: 7rem;
+    padding: 3rem;
+    
   }
 }
 
@@ -11384,7 +11385,7 @@ footer.footer {
 }
 .showcase .showcase-img {
   min-height: 30rem;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   max-height: 20px;
