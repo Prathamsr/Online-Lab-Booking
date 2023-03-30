@@ -162,7 +162,7 @@ def confirm_req(req_id):
             bd.session.add(new_con_req)
             bd.session.delete(lab)
             bd.session.commit()
-    return redirect(f"/{lab.institutedata_id}/confirm")
+    return redirect(f"/{lab.institutedata_id}/conformation")
 
 @auth.route("/<post_id>/confirm_all",methods=['post'])
 @login_required
